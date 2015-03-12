@@ -6,16 +6,14 @@ To build, make sure you have Docker [installed](http://www.docker.io/gettingstar
 
 #Instructions:
 
-## 1 - Install docker and create the image:
+## 1 - Install docker and get the image:
 ```
 curl get.docker.io | sudo sh -x
-sudo docker build -t ricardo/drupal8 https://github.com/ricardoamaro/drupal8-docker-app.git
+sudo docker pull ricardoamaro/drupal8
 ```
-this can take a while but should eventually return a command prompt. It's done when it says "Successfully built {hash}"
-
 ## 2 - Run the container, connecting port 80:
 ```
-sudo docker run -i -t -p 80:80 <yourname>/drupal8
+sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
 ```
 That's it!
 ## 3 - Visit http://localhost/ in your webrowser
@@ -27,14 +25,15 @@ using user/pass: admin/admin
 * DRUPAL MYSQL_PASSWORD will be on /drupal-db-pw.txt
 
 
-## You can also clone this repo somewhere, 
+## You can also clone this repo somewhere and build it,
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
-```
-and then build it with:
-```
 sudo docker build -t <yourname>/drupal8 .
+```
+## Or build it directly from github,
+```
+sudo docker build -t ricardo/drupal8 https://github.com/ricardoamaro/drupal8-docker-app.git
 ```
 
 Note1: you cannot have port 80 already used or the container will not start.
