@@ -16,7 +16,7 @@ sudo docker pull ricardoamaro/drupal8
 sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
 ```
 That's it!
-## 3 - Visit http://localhost/ in your webrowser
+## 3 - Visit [http://localhost/](http://localhost/) in your browser
 using user/pass: admin/admin
 
 ### Credentials:
