@@ -1,54 +1,54 @@
-docker-drupal
+drupal8-docker-app
 =============
 
-This repo contains a recipe for making a [Docker](http://docker.io) container for Drupal, using Linux, Apache and MySQL. 
+This repo contains a recipe for making a [Docker](http://docker.io) container for Drupal8, using Linux, Apache, MySQL and Memcache. 
 To build, make sure you have Docker [installed](http://www.docker.io/gettingstarted/).
 
-This will try to go in line with [Drupal automated-testing](https://drupal.org/automated-testing).
+#Instructions:
 
-## kill any running docker daemon
 ```
-sudo killall docker
-```
-## Install docker:
+## 1 - Install docker and create the image:
 ```
 curl get.docker.io | sudo sh -x
+sudo docker build -t ricardo/drupal8 https://github.com/ricardoamaro/drupal8-docker-app.git
 ```
-
-## Clone this repo somewhere, 
-```
-git clone https://github.com/ricardoamaro/docker-drupal.git
-cd docker-drupal
-```
-and then build it:
-```
-sudo docker build -t <yourname>/drupal .
-```
-
 this can take a while but should eventually return a command prompt. It's done when it says "Successfully built {hash}"
 
-## And run the container, connecting port 80:
+## 2 - Run the container, connecting port 80:
 ```
-sudo docker run -d -t -p 80:80 <yourname>/drupal
+sudo docker run -i -t -p 80:80 <yourname>/drupal8
 ```
 That's it!
-Visit http://localhost/ in your webrowser. 
+## 3 - Visit http://localhost/ in your webrowser. 
 
-Note: you cannot have port 80 already used or the container will not start.
+### Credentials:
+* Drupal account-name=admin & account-pass=admin *
+* ROOT   MYSQL_PASSWORD will be on /mysql-root-pw.txt
+* DRUPAL MYSQL_PASSWORD will be on /drupal-db-pw.txt
+
+
+## You can also clone this repo somewhere, 
+```
+git clone https://github.com/ricardoamaro/drupal8-docker-app.git
+cd drupal8-docker-app
+```
+and then build it with:
+```
+sudo docker build -t <yourname>/drupal8 .
+```
+
+Note1: you cannot have port 80 already used or the container will not start.
 In that case you can start by setting: `-p 8080:80`
+
+Note2: To run the container in the background
+```
+sudo docker run -d -t -p 80:80 <yourname>/drupal8
+```
 
 build directly from github is broken at the moment:
 ```
-sudo docker build -t <yourname>/drupal git://github.com/ricardoamaro/docker-drupal.git
+sudo docker build -t <yourname>/drupal8 git://github.com/ricardoamaro/docker-drupal.git
 ```
-
-
-### Credentials
-
-* ROOT   MYSQL_PASSWORD will be on /mysql-root-pw.txt
-* DRUPAL MYSQL PASSWORD will be on /drupal-db-pw.txt
-* Drupal account-name=admin & account-pass=admin
-
 
 ## More docker awesomeness
 
@@ -56,7 +56,7 @@ This will create an ID that you can start/stop/commit changes:
 ```
 # sudo docker ps
 ID                  IMAGE                   COMMAND               CREATED             STATUS              PORTS
-538114c20d36        <yourname>/drupal:latest   /bin/bash /start.sh   3 minutes ago       Up 6 seconds        80->80  
+538114c20d36        <yourname>/drupal8:latest   /bin/bash /start.sh   3 minutes ago       Up 6 seconds        80->80  
 ```
 
 Start/Stop
@@ -67,17 +67,17 @@ sudo docker start 538114c20d36
 
 Commit the actual state to the image
 ```
-sudo docker commit 538114c20d36 <yourname>/drupal
+sudo docker commit 538114c20d36 <yourname>/drupal8
 ```
 
 Starting again with the commited changes
 ```
-sudo docker run -d -t -p 80:80 <yourname>/drupal /start.sh
+sudo docker run -d -t -p 80:80 <yourname>/drupal8 /start.sh
 ```
 
 Shipping the container image elsewhere 
 ```
-sudo docker push  <yourname>/drupal
+sudo docker push  <yourname>/drupal8
 ```
 
 You can find more images using the [Docker Index][docker_index].
@@ -91,7 +91,6 @@ sudo docker ps -a | awk '{print $1}' | grep -v CONTAINER | xargs -n1 -I {} docke
 ``` 
 
 ### Known Issues
-* Upstart on Docker is broken due to [this issue][docker_upstart_issue], and that's one of the reasons the image is puppetized using vagrant.
 * Warning: This is still in development and ports shouldn't be open to the outside world.
 
 
@@ -106,7 +105,8 @@ Feel free to fork and contribute to this code. :)
 
 ## Authors
 
-Created and maintained by [Ricardo Amaro][author] (<mail_at_ricardoamaro.com>)
+Created and maintained by [Ricardo Amaro][author] 
+https://blog.ricardoamaro.com
 
 ## License
 GPL v3
