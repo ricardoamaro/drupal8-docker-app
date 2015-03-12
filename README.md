@@ -6,7 +6,6 @@ To build, make sure you have Docker [installed](http://www.docker.io/gettingstar
 
 #Instructions:
 
-```
 ## 1 - Install docker and create the image:
 ```
 curl get.docker.io | sudo sh -x
@@ -19,10 +18,11 @@ this can take a while but should eventually return a command prompt. It's done w
 sudo docker run -i -t -p 80:80 <yourname>/drupal8
 ```
 That's it!
-## 3 - Visit http://localhost/ in your webrowser. 
+## 3 - Visit http://localhost/ in your webrowser
+using user/pass: admin/admin
 
 ### Credentials:
-* Drupal account-name=admin & account-pass=admin *
+* Drupal account-name=admin & account-pass=admin
 * ROOT   MYSQL_PASSWORD will be on /mysql-root-pw.txt
 * DRUPAL MYSQL_PASSWORD will be on /drupal-db-pw.txt
 
