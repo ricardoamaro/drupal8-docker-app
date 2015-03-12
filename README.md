@@ -8,7 +8,7 @@ To build, make sure you have Docker [installed](http://www.docker.io/gettingstar
 
 ## 1 - Install docker and get the image:
 ```
-curl get.docker.io | sudo sh -x
+curl -s get.docker.io | sudo sh -x
 sudo docker pull ricardoamaro/drupal8
 ```
 ## 2 - Run the container, connecting port 80:
