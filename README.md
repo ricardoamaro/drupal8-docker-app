@@ -26,9 +26,9 @@ using user/pass: admin/admin
 
 ## How to go back to the last docker run?
 ```
-sudo docker ps -a | head -n2
+sudo docker ps -al
 (get the container ID)
-sudo docker start -i -a 55afd85d9020
+sudo docker start -i -a (container ID)
 ```
 
 ## You can also clone this repo somewhere and build it,
