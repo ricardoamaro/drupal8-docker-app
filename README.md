@@ -24,6 +24,12 @@ using user/pass: admin/admin
 * ROOT   MYSQL_PASSWORD will be on /mysql-root-pw.txt
 * DRUPAL MYSQL_PASSWORD will be on /drupal-db-pw.txt
 
+## How to go back to the last docker run?
+```
+sudo docker ps -a | head -n2
+(get the container ID)
+sudo docker start -i -a 55afd85d9020
+```
 
 ## You can also clone this repo somewhere and build it,
 ```
