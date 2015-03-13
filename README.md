@@ -1,14 +1,14 @@
 drupal8-docker-app
 =============
 
-This repo contains a recipe for making a [Docker](http://docker.io) container for Drupal8, using Linux, Apache, MySQL and Memcache. 
-To build, make sure you have Docker [installed](http://www.docker.io/gettingstarted/).
+This repo contains a recipe for making a Docker container for Drupal8, using Linux, Apache, MySQL and Memcache. 
+To build, make sure you [Install Docker](https://docs.docker.com/installation/).
 
-#Instructions:
+#Quick 3 step instructions for Ubuntu/Mint Linux:
 
 ## 1 - Install docker and get the image:
 ```
-curl -s get.docker.io | sudo sh -x
+sudo apt-get install docker.io apparmor
 sudo docker pull ricardoamaro/drupal8
 ```
 ## 2 - Run the container, connecting port 80:
