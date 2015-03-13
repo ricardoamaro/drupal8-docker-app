@@ -9,7 +9,7 @@ To use it, make sure you first [Install Docker](https://docs.docker.com/installa
 ## 1 - Install docker:
 https://docs.docker.com/installation/
 
-## 2 - Get the Image and Run the container, connecting port 80:
+## 2 - Get the image and run it using port 80:
 ```
 sudo docker pull ricardoamaro/drupal8
 sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
