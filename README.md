@@ -110,7 +110,7 @@ Feel free to fork and contribute to this code. :)
 ## Authors
 
 Created and maintained by [Ricardo Amaro][author]
-https://blog.ricardoamaro.com
+http://blog.ricardoamaro.com
 
 ## License
 GPL v3
