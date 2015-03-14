@@ -6,6 +6,7 @@ export LOCAL_IP=$(hostname -I)
 
 function PrintCreds() {
   # This is so the passwords show up in logs.
+  echo
 	echo "----GENERATED USERS CREDENTIALS----"
 	echo "mysql drupal password: $2"
 	echo "mysql root   password: $1"
@@ -31,7 +32,7 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	cp sites/default/default.services.yml sites/default/services.yml
 	${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
   --db-url="mysqli://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
-  --site-name "Drupal8 docker App" | grep -v 'continue?'
+  --site-name="Drupal8 docker App" | grep -v 'continue?'
 	${DRUSH} -y dl memcache | grep -v 'continue?'
 	${DRUSH} -y en memcache | grep -v 'continue?'
 	killall mysqld
@@ -42,7 +43,7 @@ else
   PrintCreds $ROOT_PASSWORD $DRUPAL_PASSWORD
 fi
 
-
+echo
 echo "--------STARTING SERVICES----------"
 echo "SSH    LOGIN: ssh root@${LOCAL_IP} with root  password: ${ROOT_PASSWORD}"
 echo "DRUPAL LOGIN: http://${LOCAL_IP}   with admin password: admin"
