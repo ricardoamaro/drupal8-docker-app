@@ -1,7 +1,7 @@
 drupal8-docker-app
-=============
+==================
 
-This repo contains a recipe for making a Docker container for Drupal8, using Linux, Apache, MySQL and Memcache. 
+This repo contains a recipe for making a Docker container running Drupal8, using Linux, Apache, MySQL, Memcache and SSH.
 To use it, make sure you first [Install Docker](https://docs.docker.com/installation/).
 
 #Quick 3 step instructions:
@@ -20,8 +20,8 @@ using user/pass: admin/admin
 
 ### Credentials:
 * Drupal account-name=admin & account-pass=admin
-* ROOT   MYSQL_PASSWORD will be on /mysql-root-pw.txt
-* DRUPAL MYSQL_PASSWORD will be on /drupal-db-pw.txt
+* ROOT SSH/MYSQL PASSWORD will be on /mysql-root-pw.txt
+* DRUPAL   MYSQL_PASSWORD will be on /drupal-db-pw.txt
 
 ## How to go back to the last docker run?
 ```
@@ -60,7 +60,7 @@ This will create an ID that you can start/stop/commit changes:
 ```
 # sudo docker ps
 ID                  IMAGE                   COMMAND               CREATED             STATUS              PORTS
-538114c20d36        <yourname>/drupal8:latest   /bin/bash /start.sh   3 minutes ago       Up 6 seconds        80->80  
+538114c20d36        <yourname>/drupal8:latest   /bin/bash /start.sh   3 minutes ago       Up 6 seconds        80->80
 ```
 
 Start/Stop
@@ -79,7 +79,7 @@ Starting again with the commited changes
 sudo docker run -d -t -p 80:80 <yourname>/drupal8 /start.sh
 ```
 
-Shipping the container image elsewhere 
+Shipping the container image elsewhere
 ```
 sudo docker push  <yourname>/drupal8
 ```
@@ -92,7 +92,7 @@ ricardoamaro/drupal-lamp
 While i am developing i use this to rm all old instances
 ```
 sudo docker ps -a | awk '{print $1}' | grep -v CONTAINER | xargs -n1 -I {} docker rm {}
-``` 
+```
 
 ### Known Issues
 * Warning: This is still in development and ports shouldn't be open to the outside world.
@@ -109,7 +109,7 @@ Feel free to fork and contribute to this code. :)
 
 ## Authors
 
-Created and maintained by [Ricardo Amaro][author] 
+Created and maintained by [Ricardo Amaro][author]
 https://blog.ricardoamaro.com
 
 ## License
