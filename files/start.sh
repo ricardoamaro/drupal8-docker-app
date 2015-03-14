@@ -1,7 +1,7 @@
 #!/bin/bash
 
 export DRUSH="/.composer/vendor/drush/drush/drush"
-LOCAL_IP=$(hostname -I)
+export LOCAL_IP=$(hostname -I)
 
 
 function PrintCreds() {
@@ -29,9 +29,11 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	mysql -uroot -p$ROOT_PASSWORD -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
 	cd /var/www/html
 	cp sites/default/default.services.yml sites/default/services.yml
-	${DRUSH} site-install standard -y --account-name=admin --account-pass=admin --db-url="mysqli://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal"
-	${DRUSH} -y dl memcache
-	${DRUSH} -y en memcache
+	${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
+  --db-url="mysqli://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
+  --site-name "Drupal8 docker App" | grep -v 'continue?'
+	${DRUSH} -y dl memcache | grep -v 'continue?'
+	${DRUSH} -y en memcache | grep -v 'continue?'
 	killall mysqld
 	sleep 5s
 else
@@ -42,8 +44,8 @@ fi
 
 
 echo "--------STARTING SERVICES----------"
-echo "SSH    LOGIN: ssh root@${LOCAL_IP}   with root password:${ROOT_PASSWORD}"
-echo "DRUPAL LOGIN: http://${LOCAL_IP}/  with admin password:admin"
-echo "USE CTRL+C TO STOP THE APP"
+echo "SSH    LOGIN: ssh root@${LOCAL_IP} with root  password: ${ROOT_PASSWORD}"
+echo "DRUPAL LOGIN: http://${LOCAL_IP}   with admin password: admin"
+echo "USE CTRL+C TO STOP THIS APP"
 echo "-----------------------------------"
 supervisord -n -c /etc/supervisor/conf.d/supervisord.conf

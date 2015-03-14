@@ -23,6 +23,8 @@ RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 # SSH fix for permanent local login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+#RUN sed -i '/SendEnv LANG/d'  /etc/ssh/ssh_config
+RUN locale-gen en_US.UTF-8
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
