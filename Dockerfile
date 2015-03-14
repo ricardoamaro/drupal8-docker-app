@@ -20,15 +20,21 @@ RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/superviso
 # Make mysql listen on the outside
 RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 
+# SSH fix for permanent local login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+ENV NOTVISIBLE "in users profile"
+RUN echo "export VISIBLE=now" >> /etc/profile
+
 # Install Composer & Drush
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master
 
 # Install supervisor
-RUN easy_install supervisor
-ADD ./files/start.sh /start.sh
-ADD ./files/foreground.sh /etc/apache2/foreground.sh
-ADD ./files/supervisord.conf /etc/supervisord.conf
+COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./files/start.sh /start.sh
+COPY ./files/foreground.sh /etc/apache2/foreground.sh
+
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
