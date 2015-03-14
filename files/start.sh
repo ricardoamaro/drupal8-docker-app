@@ -17,7 +17,7 @@ function PrintCreds() {
 if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	# Start mysql
 	/usr/bin/mysqld_safe --skip-syslog &
-	sleep 5s
+	sleep 3s
 	# Generate random passwords
 	DRUPAL_DB="drupal"
 	ROOT_PASSWORD=`pwgen -c -n -1 12`
@@ -36,7 +36,7 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	${DRUSH} -y dl memcache | grep -v 'continue?'
 	${DRUSH} -y en memcache | grep -v 'continue?'
 	killall mysqld
-	sleep 5s
+	sleep 3s
 else
 	ROOT_PASSWORD=$(cat /mysql-root-pw.txt)
 	DRUPAL_PASSWORD=$(cat /drupal-db-pw.txt)
@@ -44,9 +44,10 @@ else
 fi
 
 echo
-echo "--------STARTING SERVICES----------"
+echo "--------------------------STARTING SERVICES-----------------------------------"
 echo "SSH    LOGIN: ssh root@${LOCAL_IP} with root  password: ${ROOT_PASSWORD}"
 echo "DRUPAL LOGIN: http://${LOCAL_IP}   with admin password: admin"
+echo "Please report any issues to https://github.com/ricardoamaro/drupal8-docker-app"
 echo "USE CTRL+C TO STOP THIS APP"
-echo "-----------------------------------"
+echo "------------------------------------------------------------------------------"
 supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
