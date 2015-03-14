@@ -11,7 +11,6 @@ https://docs.docker.com/installation/
 
 ## 2 - Get the image and run it using port 80:
 ```
-sudo docker pull ricardoamaro/drupal8
 sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
 ```
 That's it!
