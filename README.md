@@ -22,20 +22,37 @@ using user/pass: admin/admin
 * ROOT SSH/MYSQL PASSWORD will be on /mysql-root-pw.txt
 * DRUPAL   MYSQL_PASSWORD will be on /drupal-db-pw.txt
 
-## How to go back to the last docker run?
+#### How to go back to the last docker run?
 ```
 sudo docker ps -al
 (get the container ID)
 sudo docker start -i -a (container ID)
 ```
+### Example usage for testing:
+Using docker exec {ID} {COMMAND}, to run your own commands.
+```
+~$ sudo docker run --name mydrupal8 -i -t -p 80:80 ricardoamaro/drupal8
 
-## You can also clone this repo somewhere and build it,
+~$ sudo docker exec mydrupal8  uptime
+ 10:02:59 up 16:41,  0 users,  load average: 1.17, 0.92, 0.76
+
+~$ sudo docker exec mydrupal8 drush status | head
+ Drupal version         :  8.0.0-beta12
+ Site URI               :  http://default 
+ Database driver        :  mysql       
+ Database hostname      :  localhost   
+ Database port          :  3306        
+ Drupal bootstrap       :  Successful  
+ ```
+
+
+#### You can also clone this repo somewhere and build it,
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
 sudo docker build -t <yourname>/drupal8 .
 ```
-## Or build it directly from github,
+#### Or build it directly from github,
 ```
 sudo docker build -t ricardo/drupal8 https://github.com/ricardoamaro/drupal8-docker-app.git
 ```
