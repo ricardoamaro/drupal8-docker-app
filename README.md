@@ -45,6 +45,9 @@ Using docker exec {ID} {COMMAND}, to run your own commands.
  Drupal bootstrap       :  Successful  
  ```
 
+#### For older Drupal versions check:
+https://github.com/ricardoamaro/drupal7-docker-app
+https://github.com/ricardoamaro/drupal6-docker-app
 
 #### You can also clone this repo somewhere and build it,
 ```
