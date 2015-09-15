@@ -9,8 +9,9 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 RUN apt-get -y install git curl wget supervisor openssh-server \
-  mysql-client mysql-server apache2 libapache2-mod-php5 pwgen python-setuptools \
-  vim-tiny php5-mysql php-apc php5-gd php5-curl php5-memcache memcached mc; \
+  mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
+  vim-tiny mc python-setuptools \ 
+  php5-cli php5-mysql php-apc php5-gd php5-curl php5-memcache memcached; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
@@ -30,6 +31,11 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 # Install Composer & Drush
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Install Drush, Drupal Console and pimp-my-log
+RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master; \
+  HOME=/ /usr/local/bin/composer global require drupal/console:dev-master; \
+  HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log"
 RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master
 
 # Install supervisor
@@ -52,6 +58,9 @@ ADD https://www.drupal.org/project/drupal /tmp/latest.html
 # Retrieve drupal
 RUN rm -rf /var/www/html ; cd /var/www ; /.composer/vendor/drush/drush/drush -v dl drupal --default-major=8 --drupal-project-rename="html"
 RUN chmod a+w /var/www/html/sites/default ; mkdir /var/www/html/sites/default/files ; chown -R www-data:www-data /var/www/html/
+
+#Manage db with adminer
+RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 WORKDIR /var/www/html
