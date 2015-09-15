@@ -10,8 +10,8 @@ RUN ln -sf /bin/true /sbin/initctl
 
 RUN apt-get -y install git curl wget supervisor openssh-server \
   mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
-  vim-tiny mc python-setuptools \ 
-  php5-cli php5-mysql php-apc php5-gd php5-curl php5-memcache memcached; \
+  vim-tiny mc python-setuptools unison memcached php5-memcache \ 
+  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
@@ -43,9 +43,11 @@ COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./files/start.sh /start.sh
 COPY ./files/foreground.sh /etc/apache2/foreground.sh
 
+#Apache & Xdebug
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
+ADD ./files/xdebug.ini /etc/php5/mods-available/xdebug.ini
 
 # Display version information
 RUN php --version
