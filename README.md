@@ -1,10 +1,13 @@
 drupal8-docker-app
 ==================
 
-This repo contains a recipe for making a Docker container running Drupal8, using Linux, Apache, MySQL, Memcache and SSH.
+This repo contains a recipe for making a Docker container
+running Drupal8, using Linux, Apache, MySQL, Memcache and SSH.
+You can also use it on the Drupal Sprints for quickly starting
+working on your Drupal8 git repo.
 To use it, make sure you first [Install Docker](https://docs.docker.com/installation/).
 
-#Quick 3 step instructions:
+# Quick 3 step instructions for single run:
 
 ## 1 - Install docker:
 https://docs.docker.com/installation/
@@ -17,6 +20,18 @@ That's it!
 ## 3 - Visit [http://localhost/](http://localhost/) in your browser
 using user/pass: admin/admin
 
+## 4 - Manage MySQL [http://localhost/adminer.php](http://localhost/adminer.php)
+in your browser
+
+# SPRINTING: If you want **Code and Database persistence** with an already
+existent Drupal8 code that you have on your computer, run it with:
+```
+sudo docker run \
+--volume=$HOME/d8/mysql:/var/lib/mysql \
+--volume=$HOME/d8/repo:/var/www/html \
+-i -t -p 80:80 ricardoamaro/drupal8
+```
+
 ### Credentials:
 * Drupal account-name=admin & account-pass=admin
 * ROOT SSH/MYSQL PASSWORD will be on /mysql-root-pw.txt
@@ -28,6 +43,7 @@ sudo docker ps -al
 (get the container ID)
 sudo docker start -i -a (container ID)
 ```
+
 ### Example usage for testing:
 Using docker exec {ID} {COMMAND}, to run your own commands.
 ```
@@ -38,11 +54,11 @@ Using docker exec {ID} {COMMAND}, to run your own commands.
 
 ~$ sudo docker exec mydrupal8 drush status | head
  Drupal version         :  8.0.0-beta12
- Site URI               :  http://default 
- Database driver        :  mysql       
- Database hostname      :  localhost   
- Database port          :  3306        
- Drupal bootstrap       :  Successful  
+ Site URI               :  http://default
+ Database driver        :  mysql
+ Database hostname      :  localhost
+ Database port          :  3306
+ Drupal bootstrap       :  Successful
  ```
 
 #### For older Drupal versions check:

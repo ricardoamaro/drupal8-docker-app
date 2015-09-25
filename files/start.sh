@@ -14,6 +14,13 @@ function PrintCreds() {
 	echo "-----------------------------------"
 }
 
+# Create a basic mysql install
+if [ ! -d /var/lib/mysql/mysql ]; then
+  echo "******* Creating a bare mysql install *******"
+  /usr/bin/mysql_install_db > /dev/null
+fi
+
+# Setup Drupal
 if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	# Start mysql
 	/usr/bin/mysqld_safe --skip-syslog &
