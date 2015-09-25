@@ -10,20 +10,25 @@ To use it, make sure you first [Install Docker](https://docs.docker.com/installa
 # Quick 3 step instructions for single run:
 
 ## 1 - Install docker:
+
 https://docs.docker.com/installation/
 
 ## 2 - Get the image and run it using port 80:
+
 ```
 sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
 ```
 That's it!
+
 ## 3 - Visit [http://localhost/](http://localhost/) in your browser
 using user/pass: admin/admin
 
-## 4 - Manage MySQL [http://localhost/adminer.php](http://localhost/adminer.php)
-in your browser
+## 4 - Manage MySQL in your browser
 
-#SPRINTING
+[http://localhost/adminer.php](http://localhost/adminer.php)
+
+# SPRINTING
+
 If you want **Code and Database persistence** with an already
 existent Drupal8 code that you have on your computer, run it with:
 ```
