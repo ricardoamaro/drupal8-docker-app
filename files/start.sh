@@ -29,8 +29,8 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	DRUPAL_DB="drupal"
 	ROOT_PASSWORD=`pwgen -c -n -1 12`
 	DRUPAL_PASSWORD=`pwgen -c -n -1 12`
-	echo $ROOT_PASSWORD > /mysql-root-pw.txt
-	echo $DRUPAL_PASSWORD > /drupal-db-pw.txt
+	echo $ROOT_PASSWORD > /var/lib/mysql/mysql/mysql-root-pw.txt
+	echo $DRUPAL_PASSWORD > /var/lib/mysql/mysql/drupal-db-pw.txt
   PrintCreds $ROOT_PASSWORD $DRUPAL_PASSWORD
   echo "root:${ROOT_PASSWORD}" | chpasswd
 	mysqladmin -u root password $ROOT_PASSWORD
@@ -45,8 +45,8 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	killall mysqld
 	sleep 3s
 else
-	ROOT_PASSWORD=$(cat /mysql-root-pw.txt)
-	DRUPAL_PASSWORD=$(cat /drupal-db-pw.txt)
+	ROOT_PASSWORD=$(cat /var/lib/mysql/mysql/mysql-root-pw.txt)
+	DRUPAL_PASSWORD=$(cat /var/lib/mysql/mysql/drupal-db-pw.txt)
   PrintCreds $ROOT_PASSWORD $DRUPAL_PASSWORD
 fi
 
