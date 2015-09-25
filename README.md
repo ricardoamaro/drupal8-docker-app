@@ -23,7 +23,8 @@ using user/pass: admin/admin
 ## 4 - Manage MySQL [http://localhost/adminer.php](http://localhost/adminer.php)
 in your browser
 
-# SPRINTING: If you want **Code and Database persistence** with an already
+#SPRINTING
+If you want **Code and Database persistence** with an already
 existent Drupal8 code that you have on your computer, run it with:
 ```
 sudo docker run \
@@ -31,6 +32,8 @@ sudo docker run \
 --volume=$HOME/d8/repo:/var/www/html \
 -i -t -p 80:80 ricardoamaro/drupal8
 ```
+You can remove the local settings.php and the mysql directory
+for a fresh Drupal8 install.
 
 ### Credentials:
 * Drupal account-name=admin & account-pass=admin
@@ -123,11 +126,13 @@ sudo docker ps -a | awk '{print $1}' | grep -v CONTAINER | xargs -n1 -I {} sudo 
 ```
 
 ### Known Issues
-* Warning: This is still in development and ports shouldn't be open to the outside world.
+* Warning: This is still in development and ports shouldn't
+be open to the outside world.
 
 
 ## Contributing
-Feel free to submit any bugs, requests, or fork and contribute to this code. :)
+Feel free to submit any bugs, requests, or fork and contribute
+to this code. :)
 
 1. Fork the repo
 2. Create your feature branch (`git checkout -b my-new-feature`)
