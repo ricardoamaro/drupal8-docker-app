@@ -10,7 +10,7 @@ RUN ln -sf /bin/true /sbin/initctl
 
 RUN apt-get -y install git curl wget supervisor openssh-server \
   mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
-  vim-tiny mc python-setuptools unison memcached php5-memcache \ 
+  vim-tiny mc python-setuptools unison memcached php5-memcache \
   php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug; \
   apt-get clean; \
   apt-get autoclean; \
@@ -66,5 +66,5 @@ RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 WORKDIR /var/www/html
-EXPOSE 22 80
+EXPOSE 22 80 9000 3306
 CMD ["/bin/bash", "/start.sh"]
