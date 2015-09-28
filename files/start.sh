@@ -2,7 +2,8 @@
 
 export DRUSH="/.composer/vendor/drush/drush/drush"
 export LOCAL_IP=$(hostname -I)
-
+export HOSTIP=$(/sbin/ip route | awk '/default/ { print $3 }')
+echo "${HOSTIP} dockerhost" >> /etc/hosts
 
 function PrintCreds() {
   # This is so the passwords show up in logs.
