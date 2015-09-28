@@ -66,5 +66,5 @@ RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 WORKDIR /var/www/html
-EXPOSE 22 80 9000 3306
+EXPOSE 22 80 3306
 CMD ["/bin/bash", "/start.sh"]

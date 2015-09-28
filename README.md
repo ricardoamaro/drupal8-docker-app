@@ -37,10 +37,10 @@ cd; mkdir d8; cd d8
 
 git clone --depth 5 --branch 8.0.x http://git.drupal.org/project/drupal.git
 
-sudo docker run \
+sudo docker run -it \
 --volume=$HOME/d8/mysql:/var/lib/mysql \
 --volume=$HOME/d8/drupal:/var/www/html \
--i -t -p 80:80 ricardoamaro/drupal8
+-p 80:80 -p 3306:3306 ricardoamaro/drupal8
 ```
 
 You can remove the local settings.php and the mysql directory
