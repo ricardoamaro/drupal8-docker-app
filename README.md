@@ -31,14 +31,25 @@ using user/pass: admin/admin
 
 If you want **Code and Database persistence** with an already
 existent Drupal8 code that you have on your computer, run it with:
+
 ```
+cd; mkdir d8; cd d8
+
+git clone --depth 5 --branch 8.0.x http://git.drupal.org/project/drupal.git
+
 sudo docker run \
 --volume=$HOME/d8/mysql:/var/lib/mysql \
---volume=$HOME/d8/repo:/var/www/html \
+--volume=$HOME/d8/drupal:/var/www/html \
 -i -t -p 80:80 ricardoamaro/drupal8
 ```
+
 You can remove the local settings.php and the mysql directory
-for a fresh Drupal8 install.
+for a fresh Drupal8 install with existent code:
+```
+cd $HOME/d8
+sudo rm -rf mysql/ repo/sites/default/settings.php
+```
+
 
 ### Credentials:
 * Drupal account-name=admin & account-pass=admin

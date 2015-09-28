@@ -34,7 +34,7 @@ if [ ! -f /var/www/html/sites/default/settings.php ]; then
   PrintCreds $ROOT_PASSWORD $DRUPAL_PASSWORD
   echo "root:${ROOT_PASSWORD}" | chpasswd
 	mysqladmin -u root password $ROOT_PASSWORD
-	mysql -uroot -p$ROOT_PASSWORD -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'localhost' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
+	mysql -uroot -p$ROOT_PASSWORD -e "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'%' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;"
 	cd /var/www/html
 	cp sites/default/default.services.yml sites/default/services.yml
 	${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
@@ -49,6 +49,10 @@ else
 	DRUPAL_PASSWORD=$(cat /var/lib/mysql/mysql/drupal-db-pw.txt)
   PrintCreds $ROOT_PASSWORD $DRUPAL_PASSWORD
 fi
+
+# Clear caches and reset files perms
+chown -fR www-data /var/www/html/sites/default/files/
+(sleep 3; drush --root=/var/www/html/ cache-rebuild 2>/dev/null) &
 
 echo
 echo "--------------------------STARTING SERVICES-----------------------------------"
