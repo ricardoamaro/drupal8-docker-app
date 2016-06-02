@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:xenial
 MAINTAINER Ricardo Amaro <mail_at_ricardoamaro.com>
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -8,14 +8,15 @@ RUN apt-get update
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
+
 RUN apt-get -y install git curl wget supervisor openssh-server \
-  mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
-  vim-tiny mc python-setuptools unison memcached php5-memcache \
-  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug; \
+  mysql-client mysql-server apache2 libapache2-mod-php pwgen \
+  vim-tiny mc python-setuptools unison memcached php-memcache \
+  php7.0-cli php7.0-mysql php-opcache php7.0-fpm php7.0-mbstring \
+  php7.0-gd php7.0-zip php7.0-xml php7.0-curl php7.0 php-xdebug; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
-
 RUN mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor
 
 # Make mysql listen on the outside
@@ -33,10 +34,9 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush, Drupal Console and pimp-my-log
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master; \
+RUN HOME=/ /usr/local/bin/composer global require drush/drush:8.*; \
   HOME=/ /usr/local/bin/composer global require drupal/console:dev-master; \
   HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log"
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master
 
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -46,8 +46,8 @@ COPY ./files/foreground.sh /etc/apache2/foreground.sh
 #Apache & Xdebug
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
-RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
-ADD ./files/xdebug.ini /etc/php5/mods-available/xdebug.ini
+RUN a2ensite 000-default ; a2enmod rewrite vhost_alias ; service apache2 restart
+ADD ./files/xdebug.ini /etc/php7/mods-available/xdebug.ini
 
 # Display version information
 RUN php --version
