@@ -33,10 +33,9 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush, Drupal Console and pimp-my-log
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master; \
+RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8; \
   HOME=/ /usr/local/bin/composer global require drupal/console:dev-master; \
   HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log"
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:dev-master
 
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
