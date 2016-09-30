@@ -35,7 +35,10 @@ existent Drupal8 code that you have on your computer, run it with:
 ```
 cd; mkdir d8; cd d8
 
-git clone --depth 5 --branch 8.0.x http://git.drupal.org/project/drupal.git
+git clone --depth 5 --branch 8.3.x http://git.drupal.org/project/drupal.git
+cd drupal
+sudo apt-get install composer
+composer install
 
 sudo docker run -it \
 --volume=$HOME/d8/mysql:/var/lib/mysql \
