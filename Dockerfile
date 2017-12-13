@@ -11,7 +11,7 @@ RUN ln -sf /bin/true /sbin/initctl
 RUN apt-get -y install git curl wget supervisor openssh-server \
   mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
   vim-tiny mc python-setuptools unison memcached php5-memcache \
-  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug; \
+  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug nano; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
