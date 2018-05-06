@@ -14,14 +14,24 @@ function PrintCreds() {
   echo "ssh   root   password: $1"
 	echo "-----------------------------------"
 }
+# If there is no index.php, download drupal
+if [ ! -f /var/www/html/index.php ]; then
+  echo "**** No Drupal found. Downloading latest to /var/www/html/ ****"
+  cd /var/www/html;
+  /.composer/vendor/drush/drush/drush -vy dl drupal \
+  --default-major=8 --drupal-project-rename="."
+  chmod a+w /var/www/html/sites/default;
+  mkdir /var/www/html/sites/default/files;
+  chown -R www-data:www-data /var/www/html/
+fi
 
 # Create a basic mysql install
 if [ ! -d /var/lib/mysql/mysql ]; then
-  echo "******* Creating a bare mysql install *******"
+  echo "**** No MySQL data found. Creating data on /var/lib/mysql/ ****"
   /usr/bin/mysql_install_db > /dev/null
 fi
 
-# Setup Drupal
+# Setup Drupal if settings.php is missing
 if [ ! -f /var/www/html/sites/default/settings.php ]; then
 	# Start mysql
 	/usr/bin/mysqld_safe --skip-syslog &
@@ -57,6 +67,7 @@ chown -fR www-data /var/www/html/sites/default/files/
 
 echo
 echo "--------------------------STARTING SERVICES-----------------------------------"
+# TODO: Show external port from env
 echo "SSH    LOGIN: ssh root@${LOCAL_IP} with root  password: ${ROOT_PASSWORD}"
 echo "DRUPAL LOGIN: http://${LOCAL_IP}   with admin password: admin"
 echo "Please report any issues to https://github.com/ricardoamaro/drupal8-docker-app"

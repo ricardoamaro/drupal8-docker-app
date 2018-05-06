@@ -1,17 +1,17 @@
-FROM ubuntu:trusty
+FROM ubuntu:bionic
 MAINTAINER Ricardo Amaro <mail_at_ricardoamaro.com>
 ENV DEBIAN_FRONTEND noninteractive
 
-#RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main restricted universe multiverse" > /etc/apt/sources.list
 RUN apt-get update
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN apt-get -y install git curl wget supervisor openssh-server \
-  mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
-  vim-tiny mc python-setuptools unison memcached php5-memcache \
-  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug nano; \
+RUN apt-get -y install git curl wget supervisor openssh-server locales \
+  mysql-client mysql-server apache2 pwgen vim-tiny mc python-setuptools \
+  unison memcached nano libapache2-mod-php php php-cli php-common \
+  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache \
+  php-curl php-readline php-xml php-memcached; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
@@ -33,9 +33,9 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush, Drupal Console and pimp-my-log
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8; \
-  HOME=/ /usr/local/bin/composer global require drupal/console:dev-master; \
-  HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log"
+RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8;
+RUN HOME=/ /usr/local/bin/composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages;
+RUN HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log";
 
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -57,10 +57,11 @@ RUN /.composer/vendor/drush/drush/drush --version && ln -s /.composer/vendor/dru
 ADD https://www.drupal.org/project/drupal /tmp/latest.html
 
 # Retrieve drupal
+RUN /bin/bash -t
 RUN rm -rf /var/www/html ; cd /var/www ; /.composer/vendor/drush/drush/drush -v dl drupal --default-major=8 --drupal-project-rename="html"
 RUN chmod a+w /var/www/html/sites/default ; mkdir /var/www/html/sites/default/files ; chown -R www-data:www-data /var/www/html/
 
-#Manage db with adminer
+# Manage db with adminer
 RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh

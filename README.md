@@ -27,23 +27,17 @@ using user/pass: admin/admin
 
 [http://localhost/adminer.php](http://localhost/adminer.php)
 
-# SPRINTING
+# COMMUNITY CONTRIBUTIONS
 
-If you want **Code and Database persistence** with an already
-existent Drupal8 code that you have on your computer, run it with:
+If you want **Code and Database persistence** with Drupal8 code
+on the "web" folder and mysql on the "data" folder:
 
 ```
-cd; mkdir d8; cd d8
+git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 
-git clone --depth 5 --branch 8.3.x http://git.drupal.org/project/drupal.git
-cd drupal
-sudo apt-get install composer
-composer install
+cd drupal8-docker-app
 
-sudo docker run -it \
---volume=$HOME/d8/mysql:/var/lib/mysql \
---volume=$HOME/d8/drupal:/var/www/html \
--p 80:80 -p 3306:3306 ricardoamaro/drupal8
+./local_run.sh
 ```
 
 You can remove the local settings.php and the mysql directory
