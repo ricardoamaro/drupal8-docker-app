@@ -8,7 +8,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 RUN apt-get -y install git curl wget supervisor openssh-server locales \
-  mysql-client mysql-server apache2 pwgen vim-tiny mc python-setuptools \
+  mysql-client mysql-server apache2 pwgen vim-tiny mc iproute python-setuptools \
   unison memcached nano libapache2-mod-php php php-cli php-common \
   php-gd php-json php-mbstring php-xdebug php-mysql php-opcache \
   php-curl php-readline php-xml php-memcached; \
