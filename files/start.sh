@@ -14,6 +14,16 @@ function PrintCreds() {
   echo "ssh   root   password: $1"
 	echo "-----------------------------------"
 }
+# If there is no index.php, download drupal
+if [ ! -f /var/www/html/index.php ]; then
+  echo "**** No Drupal found. Downloading latest ****"
+  cd /var/www/html;
+  /.composer/vendor/drush/drush/drush -vy dl drupal \
+  --default-major=8 --drupal-project-rename="."
+  chmod a+w /var/www/html/sites/default;
+  mkdir /var/www/html/sites/default/files;
+  chown -R www-data:www-data /var/www/html/
+fi
 
 # Create a basic mysql install
 if [ ! -d /var/lib/mysql/mysql ]; then
