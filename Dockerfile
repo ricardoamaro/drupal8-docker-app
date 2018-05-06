@@ -1,17 +1,17 @@
-FROM ubuntu:trusty
+FROM ubuntu:bionic
 MAINTAINER Ricardo Amaro <mail_at_ricardoamaro.com>
 ENV DEBIAN_FRONTEND noninteractive
 
-#RUN echo "deb http://archive.ubuntu.com/ubuntu saucy main restricted universe multiverse" > /etc/apt/sources.list
 RUN apt-get update
 
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
-RUN apt-get -y install git curl wget supervisor openssh-server \
-  mysql-client mysql-server apache2 libapache2-mod-php5 pwgen \
-  vim-tiny mc python-setuptools unison memcached php5-memcache \
-  php5-cli php5-mysql php-apc php5-gd php5-curl php5-xdebug nano; \
+RUN apt-get -y install git curl wget supervisor openssh-server locales \
+  mysql-client mysql-server apache2 pwgen vim-tiny mc python-setuptools \
+  unison memcached nano libapache2-mod-php php php-cli php-common \
+  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache \
+  php-readline php-xml php-memcached; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
