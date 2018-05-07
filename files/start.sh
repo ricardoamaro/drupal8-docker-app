@@ -11,8 +11,6 @@ echo "${HOSTIP} dockerhost" >> /etc/hosts
 if [ ! -d /var/lib/mysql/mysql ]; then
   echo "**** No MySQL data found. Creating data on /var/lib/mysql/ ****"
   mysqld --initialize-insecure
-  chown -R mysql:${GRPID} /var/lib/mysql
-  chmod -R ug+ws /var/lib/mysql
 else
   echo "**** MySQL data found on /var/lib/mysql/ ****"
 fi
@@ -66,8 +64,9 @@ fi
 echo "root:${ROOT_PASSWORD}" | chpasswd
 
 # Clear caches and reset files perms
-chown -fR www-data:${GRPID} /var/www/html/
-chmod -R ug+ws /var/www/html/
+chown -R www-data:${GRPID} /var/www/html/
+chown -R mysql:${GRPID} /var/lib/mysql/
+chmod -R ug+ws /var/www/html/ /var/lib/mysql/
 (sleep 3; drush --root=/var/www/html/ cache-rebuild 2>/dev/null) &
 
 echo
