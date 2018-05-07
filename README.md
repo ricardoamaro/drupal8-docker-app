@@ -1,12 +1,40 @@
 drupal8-docker-app
 ====================
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [drupal8-docker-app](#drupal8-docker-app)
+- [What is this?](#what-is-this)
+- [Quick 3 step instructions for a Drupal 8 Trial Run:](#quick-3-step-instructions-for-a-drupal-8-trial-run)
+    - [1 - Install docker:](#1---install-docker)
+    - [2 - Get the image and run it using port 80:](#2---get-the-image-and-run-it-using-port-80)
+    - [3 - Now visit [http://localhost/](http://localhost/) in your browser](#3---now-visit-httplocalhosthttplocalhost-in-your-browser)
+    - [Extra - Manage MySQL in your browser](#extra---manage-mysql-in-your-browser)
+- [COMMUNITY CONTRIBUTIONS](#community-contributions)
+    - [Using `drupal8_local.sh` for local development](#using-drupal8localsh-for-local-development)
+        - [Fresh install](#fresh-install)
+        - [Credentials (will be shown in the output)](#credentials-will-be-shown-in-the-output)
+        - [Stoping and starting Drupal8-docker-app](#stoping-and-starting-drupal8-docker-app)
+        - [Example usage for testing:](#example-usage-for-testing)
+    - [For older Drupal versions check:](#for-older-drupal-versions-check)
+    - [You can also clone this repo somewhere and build it,](#you-can-also-clone-this-repo-somewhere-and-build-it)
+    - [Or build it directly from github,](#or-build-it-directly-from-github)
+- [More docker awesomeness](#more-docker-awesomeness)
+    - [Clean up](#clean-up)
+- [Known Issues](#known-issues)
+- [Contributing](#contributing)
+    - [Authors](#authors)
+    - [License](#license)
+
+<!-- markdown-toc end -->
+
 # What is this?
 
 This repo contains a Docker recipe for making a container
-running Drupal8, using Linux, Apache, MySQL, Memcache and SSH.
+running Drupal8, using Linux, Apache, MySQL, Memcache and SSH. 
 You can also use it on the Drupal Contribution Sprints for quickly starting
-working on your Drupal8 project.
+working on your Drupal8 project. 
 Note that, despite what other Docker solutions do, this will deliver you a fast, one-shot
 container with all necessary services, thus avoiding the need of container orchestration
 and the need of installing more software.
