@@ -44,7 +44,7 @@ using user/pass: admin/admin
 # COMMUNITY CONTRIBUTIONS
 
 If you want **Code and Database persistence** with Drupal8 code
-on the "web" folder and mysql on the "data" folder:
+on the "local/web" folder and MySQL on the "local/data" folder:
 
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
@@ -52,14 +52,14 @@ cd drupal8-docker-app
 ./drupal8_local.sh
 ```
 
-## Using `drupal8_local.sh` for development
+## Using `drupal8_local.sh` for local development
 
 ### Fresh install
 
 For a fresh install or re-install of your existing code
 
-1. Remove the data/ folder
-2. Create a web/ folder with your drupal8
+1. Remove the any local/data/ folder
+2. Create a local/web/ folder with your Drupal 8 docroot
 3. Delete the sites/default/settings.php file
 4. Run `drupal8_local.sh`
 

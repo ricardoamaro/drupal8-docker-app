@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-mkdir -p web data
+mkdir -p local/web local/data
 
 # Create a random local ssh port for the container
 export WEBPORT="$(((RANDOM % 10000)+ 50000))"
@@ -16,8 +16,8 @@ docker network create --subnet=172.10.0.0/16 drupalnet 2>/dev/null || true
 # Run the container
 docker run -it \
   --net drupalnet \
-  --volume=${PWD}/data:/var/lib/mysql \
-  --volume=${PWD}/web:/var/www/html \
+  --volume=${PWD}/local/data:/var/lib/mysql \
+  --volume=${PWD}/local/web:/var/www/html \
   -p ${WEBPORT}:80 \
   -p ${DBPORT}:3306 \
   ricardoamaro/drupal8
