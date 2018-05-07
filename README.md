@@ -9,8 +9,8 @@ drupal8-docker-app
 - [Quick 3 step instructions for a Drupal 8 Trial Run:](#quick-3-step-instructions-for-a-drupal-8-trial-run)
     - [1 - Install docker:](#1---install-docker)
     - [2 - Get the image and run it using port 80:](#2---get-the-image-and-run-it-using-port-80)
-    - [3 - Now visit [http://localhost/](http://localhost/) in your browser](#3---now-visit-httplocalhosthttplocalhost-in-your-browser)
-    - [Extra - Manage MySQL in your browser](#extra---manage-mysql-in-your-browser)
+    - [3 - Visit Drupal 8 in your browser](#3---visit-drupal-8-in-your-browser)
+    - [Extra - Visualize MySQL tables in your browser](#extra---visualize-mysql-tables-in-your-browser)
 - [COMMUNITY CONTRIBUTIONS](#community-contributions)
     - [Using `drupal8_local.sh` for local development](#using-drupal8localsh-for-local-development)
         - [Fresh install](#fresh-install)
@@ -61,18 +61,20 @@ docker run -i -t -p 80:80 ricardoamaro/drupal8
 
 That's it!
 
-## 3 - Now visit [http://localhost/](http://localhost/) in your browser
+## 3 - Visit Drupal 8 in your browser
 
-using user/pass: admin/admin
+[http://localhost/](http://localhost/)
 
-## Extra - Manage MySQL in your browser
+Credentials (user/pass): admin/admin
+
+## Extra - Visualize MySQL tables in your browser
 
 [http://localhost/adminer.php](http://localhost/adminer.php)
 
 # COMMUNITY CONTRIBUTIONS
 
 If you want **Code and Database persistence** with Drupal8 code
-on the "local/web" folder and MySQL on the "local/data" folder:
+on the `local/web` folder and MySQL on the `local/data` folder:
 
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
@@ -86,9 +88,9 @@ cd drupal8-docker-app
 
 For a fresh install or re-install of your existing code
 
-1. Remove the any local/data/ folder
-2. Create a local/web/ folder with your Drupal 8 docroot
-3. Delete the sites/default/settings.php file
+1. Remove the any `local/data/` folder
+2. Create a `local/web/` folder with your Drupal 8 docroot
+3. Delete the `sites/default/settings.php` file
 4. Run `drupal8_local.sh`
 
 
