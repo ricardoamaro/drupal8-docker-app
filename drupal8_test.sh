@@ -4,7 +4,7 @@
 export WEBPORT="$(((RANDOM % 10000)+ 50000))"
 export DBPORT="$(((RANDOM % 10000)+ 51000))"
 
-echo "**** Starting Drupal using persistence on web/ and data/ ****"
+echo "**** Starting Drupal Trial test run ****"
 echo "     Using MYSQL PORT: ${DBPORT}"
 echo "     Using HTTP  URL : http://localhost:${WEBPORT}"
 
