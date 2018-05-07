@@ -10,7 +10,7 @@ To use it, make sure you first [Install Docker](https://docs.docker.com/installa
 This repo will work on MACOSX and on WIN10 with bash+docker installed.
 Feel free to test and report any issues.
 
-# Quick 3 step instructions for single run:
+# Quick 3 step instructions for a Drupal 8 Trial Run:
 
 ## 1 - Install docker:
 
@@ -24,9 +24,10 @@ sudo docker run -i -t -p 80:80 ricardoamaro/drupal8
 That's it!
 
 ## 3 - Visit [http://localhost/](http://localhost/) in your browser
+
 using user/pass: admin/admin
 
-## 4 - Manage MySQL in your browser
+## Extra - Manage MySQL in your browser
 
 [http://localhost/adminer.php](http://localhost/adminer.php)
 
