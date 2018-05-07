@@ -1,11 +1,14 @@
 drupal8-docker-app
-==================
+====================
 
 This repo contains a recipe for making a Docker container
 running Drupal8, using Linux, Apache, MySQL, Memcache and SSH.
 You can also use it on the Drupal Sprints for quickly starting
 working on your Drupal8 git repo.
 To use it, make sure you first [Install Docker](https://docs.docker.com/installation/).
+
+This repo will work on MACOSX and on WIN10 with bash+docker installed.
+Feel free to test and report any issues.
 
 # Quick 3 step instructions for single run:
 
@@ -34,24 +37,26 @@ on the "web" folder and mysql on the "data" folder:
 
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
-
 cd drupal8-docker-app
-
-./local_run.sh
+./drupal8_local.sh
 ```
 
-You can remove the local settings.php and the mysql directory
-for a fresh Drupal8 install with existent code:
-```
-cd $HOME/d8
-sudo rm -rf mysql/ repo/sites/default/settings.php
-```
+## Using `drupal8_local.sh` for development
+
+### Fresh install
+
+For a fresh install or re-install of your existing code
+
+1. Remove the data/ folder
+2. Create a web/ folder with your drupal8
+3. Delete the sites/default/settings.php file
+4. Run `drupal8_local.sh`
 
 
-### Credentials:
+### Credentials (will be shown in the output)
 * Drupal account-name=admin & account-pass=admin
-* ROOT SSH/MYSQL PASSWORD will be on /mysql-root-pw.txt
-* DRUPAL   MYSQL_PASSWORD will be on /drupal-db-pw.txt
+* ROOT SSH/MYSQL PASSWORD will be on $mysql/mysql-root-pw.txt
+* DRUPAL   MYSQL_PASSWORD will be on $mysql/drupal-db-pw.txt
 
 #### How to go back to the last docker run?
 ```
@@ -69,7 +74,7 @@ Using docker exec {ID} {COMMAND}, to run your own commands.
  10:02:59 up 16:41,  0 users,  load average: 1.17, 0.92, 0.76
 
 ~$ sudo docker exec mydrupal8 drush status | head
- Drupal version         :  8.0.0-beta12
+ Drupal version         :  8.5.3
  Site URI               :  http://default
  Database driver        :  mysql
  Database hostname      :  localhost
@@ -164,4 +169,3 @@ GPL v3
 [author]:                 https://github.com/ricardoamaro
 [docker_upstart_issue]:   https://github.com/dotcloud/docker/issues/223
 [docker_index]:           https://index.docker.io/
-

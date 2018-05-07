@@ -71,7 +71,6 @@ chmod -R ug+ws /var/www/html/
 (sleep 3; drush --root=/var/www/html/ cache-rebuild 2>/dev/null) &
 
 echo
-
 echo "------------------------- GENERATED USERS CREDENTIALS --------------------------------"
 echo
 echo "    DRUPAL:  http://${LOCAL_IP}              with user/pass: admin/admin"
@@ -85,5 +84,3 @@ echo
 echo "------------------------------STARTING SERVICES---------------------------------------"
 
 tail -f /tmp/supervisord.log
-# supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
-# /bin/bash
