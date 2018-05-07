@@ -8,10 +8,10 @@ RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
 
 RUN apt-get -y install git curl wget supervisor openssh-server locales \
-  mysql-client mysql-server apache2 pwgen vim-tiny mc iproute python-setuptools \
-  unison memcached nano libapache2-mod-php php php-cli php-common \
-  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache \
-  php-curl php-readline php-xml php-memcached; \
+  mysql-client mysql-server apache2 pwgen vim-tiny mc iproute2 python-setuptools \
+  unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
+  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
+  php-readline php-xml php-memcached; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove
@@ -23,26 +23,29 @@ RUN sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 
 # SSH fix for permanent local login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
-RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
 #RUN sed -i '/SendEnv LANG/d'  /etc/ssh/ssh_config
 RUN locale-gen en_US.UTF-8
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
+
+# Install empty data folder
+RUN rm -rf /var/lib/mysql/*; /usr/sbin/mysqld --initialize-insecure
 
 # Install Composer & Drush
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush, Drupal Console and pimp-my-log
 RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8;
-RUN HOME=/ /usr/local/bin/composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages;
-RUN HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log";
+# RUN HOME=/ /usr/local/bin/composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages;
+# RUN HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log";
 
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./files/start.sh /start.sh
 COPY ./files/foreground.sh /etc/apache2/foreground.sh
 
-#Apache & Xdebug
+# Apache & Xdebug
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
@@ -54,7 +57,7 @@ RUN composer --version
 RUN /.composer/vendor/drush/drush/drush --version && ln -s /.composer/vendor/drush/drush/drush /usr/bin/drush
 
 # Drupal new version, clean cache
-ADD https://www.drupal.org/project/drupal /tmp/latest.html
+ADD https://updates.drupal.org/release-history/drupal/8.x /tmp/latest.xml
 
 # Retrieve drupal
 RUN /bin/bash -t
@@ -64,6 +67,8 @@ RUN chmod a+w /var/www/html/sites/default ; mkdir /var/www/html/sites/default/fi
 # Manage db with adminer
 RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
 
+# Set some permissions
+RUN mkdir -p /var/run/mysqld; chown mysql:mysql /var/run/mysqld
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 WORKDIR /var/www/html
 EXPOSE 22 80 3306 9000
