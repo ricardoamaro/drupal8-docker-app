@@ -1,7 +1,6 @@
 drupal8-docker-app
 ====================
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
 **Table of Contents**
 
 - [drupal8-docker-app](#drupal8-docker-app)
@@ -27,7 +26,6 @@ drupal8-docker-app
     - [Authors](#authors)
     - [License](#license)
 
-<!-- markdown-toc end -->
 
 # What is this?
 
@@ -88,7 +86,7 @@ cd drupal8-docker-app
 
 For a fresh install or re-install of your existing code
 
-1. Remove the any `local/data/` folder
+1. Remove the `local/data/` folder
 2. Create a `local/web/` folder with your Drupal 8 docroot
 3. Delete the `sites/default/settings.php` file
 4. Run `drupal8_local.sh`
@@ -134,6 +132,7 @@ git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
 sudo docker build -t <yourname>/drupal8 .
 ```
+
 ## Or build it directly from github,
 ```
 sudo docker build -t ricardo/drupal8 https://github.com/ricardoamaro/drupal8-docker-app.git
@@ -143,6 +142,7 @@ Note1: you cannot have port 80 already used or the container will not start.
 In that case you can start by setting: `-p 8080:80`
 
 Note2: To run the container in the background
+
 ```
 sudo docker run -d -t -p 80:80 <yourname>/drupal8
 ```

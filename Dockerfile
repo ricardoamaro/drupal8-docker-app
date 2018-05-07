@@ -32,13 +32,16 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 # Install empty data folder
 RUN rm -rf /var/lib/mysql/*; /usr/sbin/mysqld --initialize-insecure
 
-# Install Composer & Drush
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install Drush, Drupal Console and pimp-my-log
-RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8;
-# RUN HOME=/ /usr/local/bin/composer require drupal/console:~1.0 --prefer-dist --optimize-autoloader --sort-packages;
-# RUN HOME=/ /usr/local/bin/composer require "potsky/pimp-my-log";
+# Install Drush & Drupal Console
+RUN HOME=/ /usr/local/bin/composer global require drush/drush:~8 \
+  && ln -s /.composer/vendor/drush/drush/drush /usr/local/bin/drush
+RUN curl https://drupalconsole.com/installer -L -o /usr/local/bin/drupal && chmod +x /usr/local/bin/drupal
+
+# Display version information
+RUN php --version; composer --version; drupal --version; drush --version
 
 # Install supervisor
 COPY ./files/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -51,17 +54,12 @@ ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
 ADD ./files/xdebug.ini /etc/php5/mods-available/xdebug.ini
 
-# Display version information
-RUN php --version
-RUN composer --version
-RUN /.composer/vendor/drush/drush/drush --version && ln -s /.composer/vendor/drush/drush/drush /usr/bin/drush
-
 # Drupal new version, clean cache
 ADD https://updates.drupal.org/release-history/drupal/8.x /tmp/latest.xml
 
 # Retrieve drupal
 RUN /bin/bash -t
-RUN rm -rf /var/www/html ; cd /var/www ; /.composer/vendor/drush/drush/drush -v dl drupal --default-major=8 --drupal-project-rename="html"
+RUN rm -rf /var/www/html ; cd /var/www ; drush -v dl drupal --default-major=8 --drupal-project-rename="html"
 RUN chmod a+w /var/www/html/sites/default ; mkdir /var/www/html/sites/default/files ; chown -R www-data:www-data /var/www/html/
 
 # Manage db with adminer

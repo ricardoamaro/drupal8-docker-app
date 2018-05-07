@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GRPID=$(stat -c "%g" /var/www/html/)
+GRPID=$(stat -c "%g" /var/lib/mysql/)
 
 export DRUSH="/.composer/vendor/drush/drush/drush"
 export LOCAL_IP=$(hostname -I| awk '{print $1}')
