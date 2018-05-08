@@ -59,11 +59,11 @@ ADD https://updates.drupal.org/release-history/drupal/8.x /tmp/latest.xml
 
 # Retrieve drupal
 RUN /bin/bash -t
-RUN rm -rf /var/www/html ; cd /var/www ; drush -v dl drupal --default-major=8 --drupal-project-rename="html"
-RUN chmod a+w /var/www/html/sites/default ; mkdir /var/www/html/sites/default/files ; chown -R www-data:www-data /var/www/html/
+RUN cd /var/www/html; drush -v dl drupal --default-major=8 --drupal-project-rename="web"
+RUN cd /var/www/html; chmod a+w web/sites/default; mkdir web/sites/default/files; chown -R www-data:www-data /var/www/html/
 
 # Manage db with adminer
-RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/adminer.php
+RUN wget "http://www.adminer.org/latest.php" -O /var/www/html/web/adminer.php
 
 # Set some permissions
 RUN mkdir -p /var/run/mysqld; chown mysql:mysql /var/run/mysqld
