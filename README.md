@@ -88,6 +88,7 @@ For a fresh install or re-install of your existing code
 
 1. Remove the `local/data/` folder
 2. Create a `local/web/` folder with your Drupal 8 docroot
+   eg. `composer create-project drupal-composer/drupal-project:8.x-dev local --no-interaction`
 3. Delete the `sites/default/settings.php` file
 4. Run `drupal8_local.sh`
 
