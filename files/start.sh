@@ -21,7 +21,7 @@ supervisord -c /etc/supervisor/conf.d/supervisord.conf -l /tmp/supervisord.log
 
 # If there is no index.php, download drupal
 if [ ! -f ${DOCROOT}/index.php ]; then
-  echo "**** No Drupal found. Downloading latest to ${BASEHTML}/ ****"
+  echo "**** No Drupal found. Downloading latest to ${DOCROOT}/ ****"
   cd ${BASEHTML};
   ${DRUSH} -vy dl drupal \
            --default-major=8 --drupal-project-rename="web"
