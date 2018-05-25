@@ -29,8 +29,9 @@ RUN locale-gen en_US.UTF-8
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-# Install empty data folder
+# Install empty data folder and bind external mysql
 RUN rm -rf /var/lib/mysql/*; /usr/sbin/mysqld --initialize-insecure
+RUN sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
