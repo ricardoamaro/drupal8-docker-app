@@ -74,10 +74,18 @@ Credentials (user/pass): admin/admin
 If you want **Code and Database persistence** with Drupal8 code
 on the `local/web` folder and MySQL on the `local/data` folder:
 
+### Linux/Mac Users
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
-./drupal8_local.sh or `drupal8_local.bat Local`
+./drupal8_local.sh
+```
+
+### Windows Users
+```
+git clone https://github.com/ricardoamaro/drupal8-docker-app.git
+cd drupal8-docker-app
+drupal8_local.bat
 ```
 
 ## Using `drupal8_local.sh` or `drupal8_local.bat` for local development
