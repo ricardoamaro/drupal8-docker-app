@@ -11,7 +11,7 @@ drupal8-docker-app
     - [3 - Visit Drupal 8 in your browser](#3---visit-drupal-8-in-your-browser)
     - [Extra - Visualize MySQL tables in your browser](#extra---visualize-mysql-tables-in-your-browser)
 - [COMMUNITY CONTRIBUTIONS](#community-contributions)
-    - [Using `drupal8_local.sh` for local development](#using-drupal8localsh-for-local-development)
+    - [Using `drupal8_local.sh` or `drupal8_local.bat` for local development](#using-drupal8localsh-or-drupal8localbat-for-local-development)
         - [Fresh install](#fresh-install)
         - [Credentials (will be shown in the output)](#credentials-will-be-shown-in-the-output)
         - [Stoping and starting Drupal8-docker-app](#stoping-and-starting-drupal8-docker-app)
@@ -74,13 +74,21 @@ Credentials (user/pass): admin/admin
 If you want **Code and Database persistence** with Drupal8 code
 on the `local/web` folder and MySQL on the `local/data` folder:
 
+### Linux/Mac Users
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
 ./drupal8_local.sh
 ```
 
-## Using `drupal8_local.sh` for local development
+### Windows Users
+```
+git clone https://github.com/ricardoamaro/drupal8-docker-app.git
+cd drupal8-docker-app
+drupal8_local.bat
+```
+
+## Using `drupal8_local.sh` or `drupal8_local.bat` for local development
 
 ### Fresh install
 
@@ -90,7 +98,7 @@ For a fresh install or re-install of your existing code
 2. Create a `local/web/` folder with your Drupal 8 docroot  
    eg. `composer create-project drupal-composer/drupal-project:8.x-dev local --no-interaction`
 3. Delete the `sites/default/settings.php` file
-4. Run `drupal8_local.sh`
+4. Run `drupal8_local.sh` to linux/mac users or `drupal8_local.bat` to windows users
 
 ### Credentials (will be shown in the output)
 * Drupal account-name=admin & account-pass=admin
@@ -102,7 +110,7 @@ For a fresh install or re-install of your existing code
 To stop and restart the installed existing site
 
 1. Press CTRL+C on the console showing the logs
-2. Run `drupal8_local.sh` on the same directory
+2. Run `drupal8_local.sh` or `drupal8_local.bat` on the same directory
 3. Open the site URL mentioned in the console
 
 ### Example usage for testing:
