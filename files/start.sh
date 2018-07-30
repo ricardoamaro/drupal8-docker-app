@@ -72,7 +72,8 @@ echo "root:${ROOT_PASSWORD}" | chpasswd
 # Clear caches and reset files perms
 chown -R www-data:${GRPID} ${DOCROOT}/
 chown -R mysql:${GRPID} /var/lib/mysql/
-chmod -R ug+ws ${DOCROOT}/ /var/lib/mysql/
+chmod -R ug+w ${DOCROOT}/ /var/lib/mysql/
+find -type d -exec chmod +xr {} \;
 (sleep 3; drush --root=${DOCROOT}/ cache-rebuild 2>/dev/null) &
 
 echo
