@@ -42,7 +42,7 @@ COPY ./files/foreground.sh /etc/apache2/foreground.sh
 # Apache & Xdebug
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
-ADD ./files/xdebug.ini /etc/php5/mods-available/xdebug.ini
+ADD ./files/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
 
 # Drupal new version, clean cache
