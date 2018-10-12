@@ -42,10 +42,9 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php ); t
   DRUPAL_PASSWORD=`pwgen -c -n -1 12`
   echo ${ROOT_PASSWORD} > /var/lib/mysql/mysql/mysql-root-pw.txt
   echo ${DRUPAL_PASSWORD} > /var/lib/mysql/mysql/drupal-db-pw.txt
-  # Wait for mysql
-  while ! nc -z localhost 3306; do sleep 0.1; done
-  # Some macs are slow to start mysql
-  sleep 3
+  # Wait for mysql. Password is initially empty.
+  echo "Checking if mysql is running..."
+  while ! mysqladmin -u root status; do sleep 0.1; done
   # Create and change MySQL creds
   mysqladmin -u root password ${ROOT_PASSWORD} 2>/dev/null
   mysql -uroot -p${ROOT_PASSWORD} -e \
