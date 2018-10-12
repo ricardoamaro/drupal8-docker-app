@@ -44,7 +44,7 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php ); t
   echo ${DRUPAL_PASSWORD} > /var/lib/mysql/mysql/drupal-db-pw.txt
   # Wait for mysql. Password is initially empty.
   echo "Checking if mysql is running..."
-  while ! sleep 1 && mysqladmin -u root status 2>/dev/null; do sleep 0.1; done
+  while ! mysqladmin -u root status 2>/dev/null; do sleep 0.1; done
   # Create and change MySQL creds
   mysqladmin -u root password ${ROOT_PASSWORD} 2>/dev/null
   mysql -uroot -p${ROOT_PASSWORD} -e \
