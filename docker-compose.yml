@@ -1,0 +1,30 @@
+version: '3.3'
+services:
+  drupal:
+    stdin_open: true
+    tty: true
+    image: "ricardoamaro/drupal8"
+    ports:
+      - 80:80
+    volumes:
+      - ./local/data:/var/lib/mysql
+      - ./local:/var/www/html
+    restart: always
+
+#  varnish:
+#    image: wodby/drupal-varnish:4.1-2.1.2
+#    ports:
+#      - 80:6081
+#    depends_on:
+#      - drupal
+#    environment:
+#      VARNISH_SECRET: secret
+#      VARNISH_BACKEND_HOST: drupal
+#      VARNISH_BACKEND_PORT: 80
+#      VARNISH_CONFIG_PRESET: drupal
+#      VARNISH_PURGE_EXTERNAL_REQUEST_HEADER: X-Real-IP
+#    labels:
+#      - 'traefik.backend=varnish'
+#      - 'traefik.port=6081'
+#      - "traefik.frontend.rule=Host:varnish.${COMPOSE_PROJECT_NAME}.docker.localhost"
+
