@@ -14,6 +14,6 @@ docker network create --subnet=10.8.8.0/16 drupalnet 2>/dev/null || true
 # Run the container
 docker run -it \
   --net drupalnet \
-  -p ${WEBPORT}:80 \
-  -p ${DBPORT}:3306 \
+  -p %WEBPORT%:80 \
+  -p %DBPORT%:3306 \
   ricardoamaro/drupal8
