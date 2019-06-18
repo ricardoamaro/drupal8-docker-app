@@ -7,7 +7,7 @@ echo      Using MYSQL PORT: %DBPORT%
 echo      Using HTTP  URL : http://localhost:%WEBPORT%
 
 :: Create a network
-docker network create --subnet=10.8.8.0/16 drupalnet
+:: docker network create --subnet=10.8.8.0/16 drupalnet
 
 :: Run the container
-docker run -it --net drupalnet -p ${WEBPORT}:80 -p ${DBPORT}:3306 ricardoamaro/drupal8
+docker run -it -p ${WEBPORT}:80 -p ${DBPORT}:3306 ricardoamaro/drupal8

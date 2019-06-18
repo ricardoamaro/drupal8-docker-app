@@ -9,11 +9,10 @@ echo "     Using MYSQL PORT: ${DBPORT}"
 echo "     Using HTTP  URL : http://localhost:${WEBPORT}"
 
 # Create a network
-docker network create --subnet=10.8.8.0/16 drupalnet 2>/dev/null || true
+#docker network create --subnet=10.8.8.0/16 drupalnet 2>/dev/null || true
 
 # Run the container
 docker run -it \
-  --net drupalnet \
   -p ${WEBPORT}:80 \
   -p ${DBPORT}:3306 \
   ricardoamaro/drupal8
