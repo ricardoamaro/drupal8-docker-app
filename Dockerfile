@@ -53,6 +53,7 @@ RUN /bin/bash -t \
     && cd /var/www/html; drush -v dl drupal --default-major=8  --drupal-project-rename="web" \
     && cd /var/www/html; chmod a+w web/sites/default; \
     mkdir web/sites/default/files; chown -R www-data:www-data /var/www/html/; \
+    chmod -R ug+w /var/www/html/ ; \
     wget "http://www.adminer.org/latest.php" -O /var/www/html/web/adminer.php
 
 # Set some permissions

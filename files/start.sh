@@ -29,6 +29,7 @@ if [ ! -f ${DOCROOT}/index.php ]; then
   mkdir ${DOCROOT}/sites/default/files;
   wget "http://www.adminer.org/latest.php" -O ${DOCROOT}/adminer.php
   chown -R www-data:${GRPID} ${DOCROOT}
+  chmod -R ug+w ${DOCROOT}
 else
   echo "**** ${DOCROOT}/index.php found  ****"
 fi
