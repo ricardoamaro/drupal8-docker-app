@@ -1,9 +1,9 @@
 #!/bin/bash -e
 
 # Note: $LOCAL can be something else for several sites running from the console
-# eg. LOCAL=site1 ./drupal8_local.sh
+# eg. ./drupal8_local.sh test
 
-LOCAL=${LOCAL:-"local"}
+LOCAL=${1:-"local"}
 
 mkdir -p ${LOCAL}/web ${LOCAL}/data
 
