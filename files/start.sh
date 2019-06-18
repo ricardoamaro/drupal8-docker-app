@@ -34,7 +34,7 @@ else
 fi
 
 # Setup Drupal if services.yml or settings.php is missing
-if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php ); then
+if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php 2>/dev/null); then
   # Generate random passwords
   DRUPAL_DB="drupal"
   DEBPASS=$(grep password /etc/mysql/debian.cnf |head -n1|awk '{print $3}')
