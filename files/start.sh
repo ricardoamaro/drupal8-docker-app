@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 export BASEHTML="/var/www/html"
 export DOCROOT="/var/www/html/web"
 export GRPID=$(stat -c "%g" /var/lib/mysql/)
