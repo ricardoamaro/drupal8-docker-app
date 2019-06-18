@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 export BASEHTML="/var/www/html"
 export DOCROOT="/var/www/html/web"
 export GRPID=$(stat -c "%g" /var/lib/mysql/)
@@ -55,7 +57,7 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php ); t
   cd ${DOCROOT}
   cp sites/default/default.settings.php sites/default/settings.php
   ${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
-           --db-url="mysqli://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
+           --db-url="mysql://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
            --site-name="Drupal8 docker App" | grep -v 'continue?' 2>/dev/null
   # TODO: move this to composer.json
   ${DRUSH} -y dl memcache >/dev/null 2>&1
@@ -70,9 +72,10 @@ fi
 echo "root:${ROOT_PASSWORD}" | chpasswd
 
 # Clear caches and reset files perms
-chown -R www-data:${GRPID} ${DOCROOT}/
+chown -R www-data:${GRPID} ${DOCROOT}/sites/default/
+chmod -R ug+w ${DOCROOT}/sites/default/
 chown -R mysql:${GRPID} /var/lib/mysql/
-chmod -R ug+w ${DOCROOT}/ /var/lib/mysql/
+chmod -R ug+w /var/lib/mysql/
 find -type d -exec chmod +xr {} \;
 (sleep 3; drush --root=${DOCROOT}/ cache-rebuild 2>/dev/null) &
 
