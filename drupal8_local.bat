@@ -18,3 +18,4 @@ echo      Using HTTP  URL : http://localhost:%WEBPORT%
 
 :: Run the container
 docker run -it --volume=%cd%\%1\data:/var/lib/mysql --volume=%cd%\%1:/var/www/html -p %WEBPORT%:80 -p %DBPORT%:3306 ricardoamaro/drupal8
+
