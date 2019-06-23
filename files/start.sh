@@ -7,6 +7,7 @@ export DRUSH="/.composer/vendor/drush/drush/drush"
 export LOCAL_IP=$(hostname -I| awk '{print $1}')
 export HOSTIP=$(/sbin/ip route | awk '/default/ { print $3 }')
 echo "${HOSTIP} dockerhost" >> /etc/hosts
+echo "Started Container: $(date)"
 
 # Create a basic mysql install
 if [ ! -d /var/lib/mysql/mysql ]; then
@@ -44,9 +45,11 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php 2>/d
   echo ${ROOT_PASSWORD} > /var/lib/mysql/mysql/mysql-root-pw.txt
   echo ${DRUPAL_PASSWORD} > /var/lib/mysql/mysql/drupal-db-pw.txt
   # Wait for mysql
-  while ! nc -z localhost 3306; do sleep 0.1; done
-  # Some macs are slow to start mysql
-  sleep 3
+  echo -n "Waiting for mysql "
+  while ! mysqladmin status >/dev/null 2>&1;
+     do echo -n . ; sleep 1;
+  done;
+  echo;
   # Create and change MySQL creds
   mysqladmin -u root password ${ROOT_PASSWORD} 2>/dev/null
   mysql -uroot -p${ROOT_PASSWORD} -e \
@@ -79,7 +82,7 @@ find -type d -exec chmod +xr {} \;
 (sleep 3; drush --root=${DOCROOT}/ cache-rebuild 2>/dev/null) &
 
 echo
-echo "------------------------- GENERATED USERS CREDENTIALS ----------------------------------"
+echo "---------------------- USERS CREDENTIALS ($(date +%T)) -------------------------------"
 echo
 echo "    DRUPAL:  http://${LOCAL_IP}              with user/pass: admin/admin"
 echo
