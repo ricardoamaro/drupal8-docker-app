@@ -12,3 +12,9 @@ natively designed to be ran on Kubernetes however it serves the pourpose for tes
 ```
 kubectl apply -f drupal-deployment.yaml
 ```
+
+# Disclaimer
+
+This config only serves development and is not the proper way to run Drupal on kubernetes. If you
+want a more robust and complex deployment that will scale you can do it with Helm and Bitnami's
+containers https://bitnami.com/stack/drupal/helm
