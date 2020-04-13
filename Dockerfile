@@ -20,6 +20,12 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
   locale-gen en_US.UTF-8; \
   mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor
 
+RUN apt-get update; \
+  echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
+  echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
+  apt-get install --assume-yes postfix mailutils; \
+  service postfix start
+
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile; \
   rm -rf /var/lib/mysql/*; /usr/sbin/mysqld --initialize-insecure; \
