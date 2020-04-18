@@ -23,8 +23,7 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 RUN apt-get update; \
   echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
   echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
-  apt-get install --assume-yes postfix mailutils; \
-  service postfix start
+  apt-get install --assume-yes postfix mailutils
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile; \
