@@ -75,8 +75,8 @@ echo "root:${ROOT_PASSWORD}" | chpasswd
 
 # Change email address
 pushd /var/www/html/web
-drush sqlq "UPDATE users_field_data SET mail = 'root@localhost' WHERE uid = 1"
-drush -y config:set system.site mail 'root@localhost'
+drush sqlq "UPDATE users_field_data SET mail = 'admin@localhost' WHERE uid = 1"
+drush -y config:set system.site mail 'site@localhost'
 popd
 
 # Clear caches and reset files perms

@@ -10,9 +10,12 @@ RUN apt-get update; \
   unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
   php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
   php-readline php-xml php-memcached php-oauth php-bcmath; \
-  echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
-  echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
-  apt-get install --assume-yes postfix mailutils ; \
+  echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections; \
+  echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections; \
+  apt-get install --assume-yes postfix mailutils; \
+  echo site: root >> /etc/aliases; \
+  echo admin: root >> /etc/aliases; \
+  newaliases; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove; \
