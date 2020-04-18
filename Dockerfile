@@ -12,7 +12,7 @@ RUN apt-get update; \
   php-readline php-xml php-memcached php-oauth php-bcmath; \
   echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
   echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
-  apt-get install --assume-yes postfix mailutils
+  apt-get install --assume-yes postfix mailutils ; \
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove; \
