@@ -10,6 +10,9 @@ RUN apt-get update; \
   unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
   php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
   php-readline php-xml php-memcached php-oauth php-bcmath; \
+  echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
+  echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
+  apt-get install --assume-yes postfix mailutils
   apt-get clean; \
   apt-get autoclean; \
   apt-get -y autoremove; \
@@ -19,11 +22,6 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
   echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config; \
   locale-gen en_US.UTF-8; \
   mkdir -p /var/lock/apache2 /var/run/apache2 /var/run/sshd /var/log/supervisor
-
-RUN apt-get update; \
-  echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections ; \
-  echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections ; \
-  apt-get install --assume-yes postfix mailutils
 
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile; \
