@@ -85,7 +85,7 @@ cd drupal8-docker-app
 ```
 git clone https://github.com/ricardoamaro/drupal8-docker-app.git
 cd drupal8-docker-app
-drupal8_local.bat
+drupal8_local.bat local
 ```
 
 ## Using `drupal8_local.sh` or `drupal8_local.bat` for local development
@@ -98,7 +98,7 @@ For a fresh install or re-install of your existing code
 2. Create a `local/web/` folder with your Drupal 8 docroot  
    eg. `composer create-project drupal-composer/drupal-project:8.x-dev local --no-interaction`
 3. Delete the `sites/default/settings.php` file
-4. Run `drupal8_local.sh` to linux/mac users or `drupal8_local.bat` to windows users
+4. Run `drupal8_local.sh` for linux/mac users or `drupal8_local.bat local` for windows users
 
 ### Credentials (will be shown in the output)
 * Drupal account-name=admin & account-pass=admin
