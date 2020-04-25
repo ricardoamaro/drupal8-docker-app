@@ -8,11 +8,11 @@ RUN apt-get update; \
   echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections; \
   echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections; \
   apt-get -y install git curl wget supervisor openssh-server locales \
-  mysql-client mysql-server apache2 pwgen vim-tiny mc iproute2 python-setuptools \
-  unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
-  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
-  php-readline php-xml php-memcached php-oauth php-bcmath \
-  postfix mailutils; \
+    mysql-client mysql-server apache2 pwgen vim-tiny mc iproute2 python-setuptools \
+    unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
+    php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
+    php-readline php-xml php-memcached php-oauth php-bcmath \
+    postfix mailutils; \
   echo site: root >> /etc/aliases; \
   echo admin: root >> /etc/aliases; \
   newaliases; \
