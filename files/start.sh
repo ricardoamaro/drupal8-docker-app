@@ -58,9 +58,9 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php 2>/d
         "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'%' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;" 2>/dev/null
   cd ${DOCROOT}
   cp sites/default/default.settings.php sites/default/settings.php
-  ${DRUSH} site-install standard -y --account-name=admin --account-pass=admin \
+  ${DRUSH} site-install standard -y --account-name=admin --account-pass=admin --account-mail=admin@localhost \
            --db-url="mysql://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
-           --site-name="Drupal8 docker App" | grep -v 'continue?' 2>/dev/null
+           --site-name="Drupal8 docker App" --site-mail=site@localhost | grep -v 'continue?' 2>/dev/null
   # TODO: move this to composer.json
   ${DRUSH} -y dl memcache >/dev/null 2>&1
   ${DRUSH} -y en memcache | grep -v 'continue?' | grep -v error 2>/dev/null
