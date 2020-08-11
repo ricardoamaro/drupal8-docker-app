@@ -46,21 +46,26 @@ if ( ! grep -q 'database.*=>.*drupal' ${DOCROOT}/sites/default/settings.php 2>/d
   echo ${DRUPAL_PASSWORD} > /var/lib/mysql/mysql/drupal-db-pw.txt
   # Wait for mysql
   echo -n "Waiting for mysql "
-  while ! mysqladmin status >/dev/null 2>&1;
-     do echo -n . ; sleep 1;
+  while ! mysqladmin status >/dev/null 2>&1; do
+       echo -n . ; sleep 1;
   done;
   echo;
   # Create and change MySQL creds
   mysqladmin -u root password ${ROOT_PASSWORD} 2>/dev/null
-  mysql -uroot -p${ROOT_PASSWORD} -e \
-        "GRANT ALL PRIVILEGES ON *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY '$DEBPASS';" 2>/dev/null
-  mysql -uroot -p${ROOT_PASSWORD} -e \
-        "CREATE DATABASE drupal; GRANT ALL PRIVILEGES ON drupal.* TO 'drupal'@'%' IDENTIFIED BY '$DRUPAL_PASSWORD'; FLUSH PRIVILEGES;" 2>/dev/null
+  echo -e "[client]\npassword=${ROOT_PASSWORD}\n" > /root/.my.cnf
+  mysql -e \
+    "CREATE USER 'debian-sys-maint'@'localhost' IDENTIFIED WITH mysql_native_password BY '${DEBPASS}';
+     GRANT ALL ON *.* TO 'debian-sys-maint'@'localhost';
+     CREATE DATABASE drupal;
+     CREATE USER 'drupal'@'%' IDENTIFIED WITH mysql_native_password BY '${DRUPAL_PASSWORD}';
+     GRANT ALL ON drupal.* TO 'drupal'@'%';
+     FLUSH PRIVILEGES;"
   cd ${DOCROOT}
   cp sites/default/default.settings.php sites/default/settings.php
   ${DRUSH} site-install standard -y --account-name=admin --account-pass=admin --account-mail=admin@localhost \
-           --db-url="mysql://drupal:${DRUPAL_PASSWORD}@localhost:3306/drupal" \
-           --site-name="Drupal8 docker App" --site-mail=site@localhost | grep -v 'continue?' 2>/dev/null
+    --db-url="mysql://root:${ROOT_PASSWORD}@localhost:3306/drupal" \
+    --site-name="Drupal8 docker App" --site-mail=site@localhost | grep -v 'continue?' 2>/dev/null
+  
   # TODO: move this to composer.json
   ${DRUSH} -y dl memcache >/dev/null 2>&1
   ${DRUSH} -y en memcache | grep -v 'continue?' | grep -v error 2>/dev/null

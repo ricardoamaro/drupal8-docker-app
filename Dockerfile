@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:20.04
 MAINTAINER Ricardo Amaro <mail_at_ricardoamaro.com>
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -8,11 +8,11 @@ RUN apt-get update; \
   echo "postfix postfix/mailname string drupal-mail" | debconf-set-selections; \
   echo "postfix postfix/main_mailer_type string 'Local only'" | debconf-set-selections; \
   apt-get -y install git curl wget supervisor openssh-server locales \
-    mysql-client mysql-server apache2 pwgen vim-tiny mc iproute2 python-setuptools \
-    unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
-    php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
-    php-readline php-xml php-memcached php-oauth php-bcmath \
-    postfix mailutils; \
+  mysql-client mysql-server apache2 pwgen vim-tiny mc iproute2 python-setuptools \
+  unison netcat net-tools memcached nano libapache2-mod-php php php-cli php-common \
+  php-gd php-json php-mbstring php-xdebug php-mysql php-opcache php-curl \
+  php-readline php-xml php-memcached php-oauth php-bcmath \
+  postfix mailutils; \
   echo site: root >> /etc/aliases; \
   echo admin: root >> /etc/aliases; \
   newaliases; \
@@ -30,7 +30,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile; \
   rm -rf /var/lib/mysql/*; /usr/sbin/mysqld --initialize-insecure; \
   sed -i 's/^bind-address/#bind-address/g' /etc/mysql/mysql.conf.d/mysqld.cnf; \
-  sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
+  sed -i "s/Basic Settings/Basic Settings\ndefault-authentication-plugin=mysql_native_password\n/" /etc/mysql/mysql.conf.d/mysqld.cnf
 
 # Install Composer, drush and drupal console
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -48,7 +48,7 @@ COPY ./files/foreground.sh /etc/apache2/foreground.sh
 # Apache & Xdebug
 RUN rm /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/*
 ADD ./files/000-default.conf /etc/apache2/sites-available/000-default.conf
-ADD ./files/xdebug.ini /etc/php/7.2/mods-available/xdebug.ini
+ADD ./files/xdebug.ini /etc/php/*/mods-available/xdebug.ini
 RUN a2ensite 000-default ; a2enmod rewrite vhost_alias
 
 # Drupal new version, clean cache
