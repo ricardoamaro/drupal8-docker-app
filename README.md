@@ -1,5 +1,6 @@
 drupal8-docker-app
 ====================
+Click here for [the Drupal 9 version](https://github.com/ricardoamaro/drupal9-docker-app).
 
 **Table of Contents**
 
